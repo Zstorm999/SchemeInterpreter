@@ -1,0 +1,46 @@
+cabal-version:      2.4
+name:               scheme
+version:            0.1.0.0
+
+-- A short (one-line) description of the package.
+-- synopsis:
+
+-- A longer description of the package.
+-- description:
+
+-- A URL where users can report bugs.
+-- bug-reports:
+license:            NONE
+author:             Zstorm999
+maintainer:         46458357+Zstorm999@users.noreply.github.com
+
+-- A copyright notice.
+-- copyright:
+-- category:
+extra-source-files: CHANGELOG.md
+
+executable scheme
+    main-is:          Main.hs
+
+    -- Modules included in this executable, other than Main.
+    other-modules:    Errors,
+                      Evaluator,
+                      Parser,
+                      REPL,
+                      Values,
+                      Evaluator.Primitives,
+                      Evaluator.Primitives.Bool,
+                      Evaluator.Primitives.Char,
+                      Evaluator.Primitives.List,
+                      Evaluator.Primitives.Number,
+                      Evaluator.Primitives.Operations,
+                      Evaluator.Primitives.String,
+                      Evaluator.Primitives.Symbol
+
+
+    -- LANGUAGE extensions used by modules in this package.
+    --other-extensions: 
+
+    build-depends:    base ^>=4.15.0.0, parsec, mtl
+    hs-source-dirs:   app
+    default-language: Haskell2010
