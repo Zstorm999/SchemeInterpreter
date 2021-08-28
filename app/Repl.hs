@@ -1,15 +1,16 @@
 module REPL (
     runRepl
-) where 
+) where
 
 import System.IO (hFlush, stdout)
 import Text.ParserCombinators.Parsec (parse)
 
+import Environment
 import Errors
 import Evaluator
 import Parser
 import Values
- 
+
 
 readExpr :: String -> ThrowsError LispVal
 readExpr input = case parse parseExpr "lisp" input of
@@ -22,21 +23,23 @@ flushStr str = putStr str >> hFlush stdout
 readPrompt :: String -> IO String
 readPrompt prompt = flushStr prompt >> getLine
 
-evalString :: String -> IO String
-evalString expr = return $ extractValue $ trapError (fmap show $ readExpr expr >>= eval)
+evalString :: Env -> String -> IO String
+evalString env expr = runIOThrows $ fmap show $ liftThrows (readExpr expr) >>= eval env
 
-evalAndPrint :: String -> IO ()
-evalAndPrint expr = evalString expr >>= putStrLn
+evalAndPrint :: Env -> String -> IO ()
+evalAndPrint env expr = evalString env expr >>= putStrLn
 
 until_ :: Monad m => (a -> Bool) -> m a -> (a -> m ()) -> m ()
-until_ pred prompt action = do 
+until_ pred prompt action = do
     result <- prompt
-    if pred result 
+    if pred result
         then return ()
         else action result >> until_ pred prompt action
 
+
 runRepl :: IO ()
-runRepl = do
-    putStrLn "Welcome to Scheme REPL, written by Zstorm999"
-    putStrLn "Type \"quit\" to exit the prompt"
-    until_ (== "quit") (readPrompt "Scheme>> ") evalAndPrint
+runRepl = 
+    putStrLn "Welcome to Scheme REPL, written by Zstorm999" >>
+    putStrLn "Type \"quit\" to exit the prompt" >>
+    nullEnv >>=
+    until_ (== "quit") (readPrompt "Scheme>> ") . evalAndPrint

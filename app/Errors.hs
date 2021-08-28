@@ -3,10 +3,15 @@ module Errors(
     ThrowsError,
     trapError,
     extractValue,
+    IOThrowsError,
+    liftThrows,
+    runIOThrows,
     Except.throwError
 ) where
 
 import Values ( LispVal, unwordsList )
+
+import Data.Functor
 import Text.Parsec ( ParseError )
 import qualified Control.Monad.Except as Except
 
@@ -35,3 +40,14 @@ trapError action = Except.catchError action (return . show)
 
 extractValue :: ThrowsError a -> a
 extractValue (Right val) = val
+
+-- env exception handling
+
+type IOThrowsError = Except.ExceptT LispError IO
+
+liftThrows :: ThrowsError a -> IOThrowsError a
+liftThrows (Left err) = Except.throwError err
+liftThrows (Right val) = return val
+
+runIOThrows :: IOThrowsError String -> IO String
+runIOThrows action = Except.runExceptT (trapError action) <&> extractValue
