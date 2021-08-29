@@ -2,7 +2,6 @@ module Evaluator.Primitives.Symbol (
     primitives
 ) where 
 
-import Errors 
 import Evaluator.Primitives.Operations 
 import Values
 

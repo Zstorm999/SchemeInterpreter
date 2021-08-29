@@ -3,7 +3,6 @@ module Evaluator.Primitives.Operations (
     boolBinop
 ) where 
 
-import Errors
 import Values
 
 

@@ -3,7 +3,6 @@ module Evaluator.Primitives.List (
 ) where
 
 import Values
-import Errors
 
 import Evaluator.Primitives.Operations
 

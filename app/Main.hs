@@ -5,7 +5,6 @@ import System.Environment (getArgs)
 
 
 
-import Errors
 import Evaluator ( eval )
 import Parser ( parseExpr )
 import Values ( LispVal )
@@ -21,6 +20,7 @@ main = do
         0 -> runRepl
         1 -> putStrLn "Reading of files is not yet supported"
         _ -> putStrLn "Run with no arguments for interactive scheme, or with the path to one scheme source file"
+
 
 
 

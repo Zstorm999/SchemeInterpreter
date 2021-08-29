@@ -6,8 +6,7 @@ import System.IO (hFlush, stdout)
 import Text.ParserCombinators.Parsec (parse)
 
 import Environment
-import Errors
-import Evaluator
+import Evaluator ( eval )
 import Parser
 import Values
 
@@ -41,5 +40,5 @@ runRepl :: IO ()
 runRepl = 
     putStrLn "Welcome to Scheme REPL, written by Zstorm999" >>
     putStrLn "Type \"quit\" to exit the prompt" >>
-    nullEnv >>=
+    primitiveBindings >>=
     until_ (== "quit") (readPrompt "Scheme>> ") . evalAndPrint

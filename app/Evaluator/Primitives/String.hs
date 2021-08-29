@@ -2,7 +2,7 @@ module Evaluator.Primitives.String (
     primitives
 ) where 
 
-import Errors 
+ 
 import Evaluator.Primitives.Operations 
 import Values
 

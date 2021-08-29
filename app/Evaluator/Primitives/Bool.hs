@@ -2,7 +2,6 @@ module Evaluator.Primitives.Bool (
     primitives
 ) where 
 
-import Errors 
 import Evaluator.Primitives.Operations 
 import Values
 
